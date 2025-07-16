@@ -39,16 +39,62 @@ def main():
             package_version = f'{default_version}+dev'
         else:
             package_version = f'{default_version}+git{sha[:7]}'
-
-    setup(name=package_name,
-          version=package_version,
-          install_requires=[install_reqs],
-          description='A python package to run YOLOv9 models (non Ultralytics)',
-          url='https://github.com/vexcel-data/yolov9.git',
-          author='ML team',
-          python_requires='>=3.6,<4',
-          packages=find_packages(include=['models', 'utils']),
-          )        
+    
+    setup(
+        name=package_name,
+        version=package_version,
+        description="YOLOv9 models, utilities and tools package",
+        url='https://github.com/vexcel-data/yolov9.git',
+        author='ML team',
+        python_requires=">=3.8",
+        install_requires=[install_reqs],
+        include_package_data=True,
+        packages=[
+            'yolov9_vx',
+            'yolov9_vx.models',
+            'yolov9_vx.utils',
+            'yolov9_vx.utils.segment',
+            'yolov9_vx.utils.panoptic',
+            'yolov9_vx.utils.tal',
+            'yolov9_vx.utils.loggers',
+            'yolov9_vx.utils.loggers.clearml',
+            'yolov9_vx.utils.loggers.comet',
+            'yolov9_vx.utils.loggers.wandb',
+            'yolov9_vx.tools'
+        ],
+        package_dir={
+            'yolov9_vx': 'yolov9_vx',
+            'yolov9_vx.models': 'models',
+            'yolov9_vx.utils': 'utils',
+            'yolov9_vx.utils.segment': 'utils/segment',
+            'yolov9_vx.utils.panoptic': 'utils/panoptic',
+            'yolov9_vx.utils.tal': 'utils/tal',
+            'yolov9_vx.utils.loggers': 'utils/loggers',
+            'yolov9_vx.utils.loggers.clearml': 'utils/loggers/clearml',
+            'yolov9_vx.utils.loggers.comet': 'utils/loggers/comet',
+            'yolov9_vx.utils.loggers.wandb': 'utils/loggers/wandb',
+            'yolov9_vx.tools': 'tools'
+        },
+        classifiers=[
+            "Development Status :: 4 - Beta",
+            "Intended Audience :: Developers",
+            "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+            "Operating System :: OS Independent",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Topic :: Scientific/Engineering :: Artificial Intelligence",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+        ],
+        package_data={
+            'yolov9_vx': ['*.yaml', '*.yml'],
+            'yolov9_vx.models': ['**/*.yaml', '**/*.yml'],
+            'yolov9_vx.utils': ['**/*.yaml', '**/*.yml'],
+            'yolov9_vx.tools': ['**/*.yaml', '**/*.yml', '**/*.ipynb'],
+        },
+)
 
 
 if __name__ == '__main__':
