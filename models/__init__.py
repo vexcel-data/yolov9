@@ -1,1 +1,1 @@
-# init
+__version__ = 'REPLACE'
