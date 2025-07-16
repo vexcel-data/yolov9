@@ -45,9 +45,25 @@ spec:
             . .venv/bin/activate
             python3 -m pip install -r requirements.txt --no-cache-dir
             rm -rf .venv
-        - image: uses:vexcel-data/jx3-tekton-catalog/task/python/0.1/python-release-cda-upload.yaml@versionStream
+        - image: uses:vexcel-data/jx3-tekton-catalog/task/python/0.1/codeartifact-token-releases.yaml@versionStream
           name: ""
           resources: {}
+        - image: public.ecr.aws/docker/library/python:3.10
+          name: build-python-push-cda
+          resources: { }
+          script: |
+            #!/bin/sh
+            . .jx/variables.sh
+            if [ -e pip.conf ]; then
+              cp pip.conf /etc/ #copy generated pip.conf from previous steps
+            fi
+            PACKAGE_NAME=$(grep -i 'package_name =' setup.py | cut -d"'" -f2)
+            sed -i "s/REPLACE/${VERSION}/g" $PACKAGE_NAME/__init__.py
+            sed -i "s/TIMESTAMP/`date -Iseconds`/g" $PACKAGE_NAME/__init__.py
+            cp /root/.pypirc/.pypirc /tekton/home/
+            pip install wheel twine packaging # 'urllib3<2' to avoid DEFAULT_CIPHERS error https://github.com/Yelp/elastalert/issues/2306
+            python3 build_wheel.py
+            twine upload -r aws dist/* --verbose --non-interactive     
         - name: promote-changelog
           resources: {}
   podTemplate: {}
