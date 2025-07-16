@@ -53,6 +53,7 @@ spec:
           resources: { }
           script: |
             #!/bin/sh
+            set -xe
             . .jx/variables.sh
             if [ -e pip.conf ]; then
               cp pip.conf /etc/ #copy generated pip.conf from previous steps
