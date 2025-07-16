@@ -41,7 +41,10 @@ spec:
             apt-get install --no-install-recommends -y build-essential python3 python3-dev python3-pip libpq-dev
 
             export PYTHONPATH=$PYTHONPATH:$PWD
+            python3 -m venv .venv
+            source .venv/bin/activate
             python3 -m pip install -r requirements.txt --no-cache-dir
+            rm -rf .venv
         - image: uses:vexcel-data/jx3-tekton-catalog/task/python/0.1/python-release-cda-upload.yaml@versionStream
           name: ""
           resources: {}
