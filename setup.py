@@ -25,14 +25,13 @@ def parse_requirements(filename):
 
 def main():
     package_name = 'yolov9-vx'
-    submodule_name = 'models'
     install_reqs = parse_requirements("./requirements.txt")
     print(os.path.join(os.path.dirname(__file__), submodule_name))
 
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), submodule_name))
-    import models
+    import yolov9_vx
 
-    package_version = models.__version__
+    package_version = yolov9_vx.__version__
     if package_version == 'REPLACE':
         default_version = '0.0.1'
         sha = get_sha(Path.cwd())
