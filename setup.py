@@ -26,9 +26,9 @@ def parse_requirements(filename):
 def main():
     package_name = 'yolov9-vx'
     install_reqs = parse_requirements("./requirements.txt")
-    print(os.path.join(os.path.dirname(__file__), submodule_name))
+    print(os.path.join(os.path.dirname(__file__), package_name))
 
-    sys.path.insert(0, os.path.join(os.path.dirname(__file__), submodule_name))
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), package_name))
     import yolov9_vx
 
     package_version = yolov9_vx.__version__
