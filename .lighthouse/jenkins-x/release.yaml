@@ -57,7 +57,7 @@ spec:
             if [ -e pip.conf ]; then
               cp pip.conf /etc/ #copy generated pip.conf from previous steps
             fi
-            PACKAGE_NAME=$(grep -i 'package_name =' setup.py | cut -d"'" -f2)
+            PACKAGE_NAME=yolov9_vx
             sed -i "s/REPLACE/${VERSION}/g" $PACKAGE_NAME/__init__.py
             sed -i "s/TIMESTAMP/`date -Iseconds`/g" $PACKAGE_NAME/__init__.py
             cp /root/.pypirc/.pypirc /tekton/home/
